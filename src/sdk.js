@@ -1,0 +1,1 @@
+window.APISDK = require('./index');
