@@ -2,7 +2,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
   entry: {
-    sdk: './src/index.js',
+    index: ['./src/index.js'],
+    sdk: ['./src/sdk.js']
   },
   output: {
     path: './dist',
