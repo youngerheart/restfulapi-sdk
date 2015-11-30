@@ -16,7 +16,15 @@
         yoo: '/api/:yoo'
       };
       var api = APISDK(url);
-      console.log(api);
+      api.hehe.haha.post({
+        id: 'wow'
+      }, {
+        yoo: '123'
+      }).send(function(res, code) {
+        console.log('ok');
+      }, function(res, code) {
+        console.log('error');
+      });
     </script>
   </body>
 </html>
