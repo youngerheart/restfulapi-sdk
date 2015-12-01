@@ -69,18 +69,18 @@ const getSendFunc = (arg, method, url) => {
         req.send();
         break;
       case 1:
-        realUrl = parseUrl(url, arg[0])
+        realUrl = parseUrl(url, arg[0]);
         openReq();
         req.send();
         break;
       case 2:
-        realUrl = parseUrl(url, arg[0])
+        realUrl = parseUrl(url, arg[0]);
         openReq();
         req.send(getParamStr(arg[1]));
         break;
     }
   };
-}
+};
 
 // 得到获取缓存数据的函数
 const getCacheFunc = (arg, method, url) => {
@@ -111,10 +111,10 @@ const method = (method, url) => {
   return (...arg) => {
     var methodObj = {
       send: getSendFunc(arg, method, url)
-    }
+    };
     if(method === 'get') methodObj.cache = getCacheFunc(arg, method, url);
     return methodObj;
-  }
+  };
 };
 
 // 生成四种方法
@@ -126,7 +126,7 @@ const http = {
       post: method('post', url),
       put: method('put', url),
       del: method('delete', url)
-    }
+    };
   },
   setConfig(config) {
     if(typeof config === 'undefined' || config.cache) {
@@ -141,6 +141,6 @@ const http = {
       config.cache = false;
     }
   }
-}
+};
 
 module.exports = http;

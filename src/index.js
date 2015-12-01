@@ -21,7 +21,7 @@ const copy = function(obj) {
   const walk = (obj, newObj) => {
     for(var key in obj) {
       if(typeof obj[key] === 'object') {
-        newObj[key] = {}
+        newObj[key] = {};
         walk(obj[key], newObj[key]);
       } else if(typeof obj[key] === 'string') {
         newObj[key] = obj[key];
@@ -46,7 +46,7 @@ APISDK.all = (arr) => {
   return {
     send: null,
     cache: null
-  }
+  };
 };
 
 module.exports = APISDK;

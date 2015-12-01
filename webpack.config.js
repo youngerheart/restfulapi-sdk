@@ -14,8 +14,11 @@ module.exports = {
     presets: ['es2015']
   },
   module: {
+    preLoaders: [
+      {test: /\.js$/, exclude: '/node_modules', loader: 'eslint'}
+    ],
     loaders: [
-      {test: /\.js$/, exclude: '/node_modules', loader: 'babel'},
+      {test: /\.js$/, exclude: '/node_modules', loader: 'babel'}
     ]
   }
 };
