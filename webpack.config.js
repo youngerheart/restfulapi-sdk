@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
@@ -20,5 +21,12 @@ module.exports = {
     loaders: [
       {test: /\.js$/, exclude: '/node_modules', loader: 'babel'}
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ]
 };
