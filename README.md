@@ -23,7 +23,15 @@ Include js in `/dist` by tag , you can also require js by `require('restfulapi-s
         }
       };
 
-      const APISDK = require(restfulapi-sdk);
+      var config = {
+        cache: true, // 是否开启缓存，默认开启(仅对get方法有效)
+        cachePrefix: 'api', // 缓存前缀，默认为'api'
+        overdue: 3600, // 缓存时间，单位秒，默认为3600
+        overdueDay: null, // 缓存天数，优先级高于timeOut，默认为null
+        isSession: false // 是否使用sessionStorage缓存
+      };
+
+      const APISDK = require('restfulapi-sdk');
       const API = new APISDK(urls, config);
 
       var todo1 = API.order.get({
@@ -40,9 +48,9 @@ Include js in `/dist` by tag , you can also require js by `require('restfulapi-s
       .cache(() => {
         // success
       }, () => {
-        // failed
-      }) // 使用到缓存数据时
-      .send(() => {}, () => {}); // 使用接口数据时
+        // no data or overdue
+      })
+      .send((res, resCode) => {}, (err, resCode) => {}); // 使用接口数据时
 
       API.user.put({
         id: id
