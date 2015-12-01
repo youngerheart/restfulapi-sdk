@@ -14,6 +14,7 @@ const walk = function(obj) {
   }
 };
 
+// 深拷贝对象
 const copy = function(obj) {
   var newObj = {};
   const walk = (obj, newObj) => {
@@ -30,6 +31,7 @@ const copy = function(obj) {
   return newObj;
 };
 
+// 生成SDK对象
 const SDK = function(url) {
   var api = copy(url);
   walk(api);

@@ -7,6 +7,7 @@ module.exports = {
   },
   output: {
     path: './dist',
+    publicPath: '/dist/',
     filename: isProduction ? '[name].[chunkhash].js' : '[name].js'
   },
   babel: {

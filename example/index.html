@@ -6,7 +6,7 @@
   </head>
   <body>
     <div></div>
-    <script type="text/javascript" src="../dist/sdk.js"></script>
+    <script type="text/javascript" src="dist/sdk.js"></script>
     <script type="text/javascript">
       var url = {
         hehe: {
@@ -16,7 +16,16 @@
         yoo: '/api/:yoo'
       };
       var api = APISDK(url);
-      console.log(api);
+      api.hehe.haha.post({
+        id: 'wow',
+        eee: 123
+      }, {
+        yoo: '123'
+      }).send(function(res, code) {
+        console.log('ok');
+      }, function(res, code) {
+        console.log('error');
+      });
     </script>
   </body>
 </html>
