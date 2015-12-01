@@ -20,6 +20,9 @@
     "url": "https://github.com/youngerheart/daterangepicker/issues"
   },
   "homepage": "https://github.com/youngerheart/daterangepicker",
+  "dependencies": {
+    "browser-cache": "0.0.5"
+  },
   "devDependencies": {
     "babel-core": "^6.1.2",
     "babel-loader": "^6.1.0",

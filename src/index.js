@@ -1,3 +1,4 @@
+const Cache = require('browser-cache');
 const http = require('./http');
 
 // 遍历url对象，生成api对象。
@@ -8,7 +9,7 @@ const walk = function(obj) {
     } else if(typeof obj[key] === 'string') {
       var url = obj[key];
       obj[key] = (function(url) {
-        return http(url);
+        return http.getObj(url);
       })(url);
     }
   }
@@ -31,22 +32,21 @@ const copy = function(obj) {
   return newObj;
 };
 
-// 生成SDK对象
-class SDK {
+// 生成APISDK对象
+class APISDK {
   constructor(url, config) {
-    this.url = url;
-    this.config = config;
-    var api = copy(this.url);
+    http.setConfig(config);
+    var api = copy(url);
     walk(api);
     return api;
   }
 };
 
-SDK.all = (arr) => {
+APISDK.all = (arr) => {
   return {
     send: null,
     cache: null
   }
 };
 
-module.exports = SDK;
+module.exports = APISDK;
