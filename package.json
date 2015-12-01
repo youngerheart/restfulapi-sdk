@@ -1,25 +1,25 @@
 {
-  "name": "resfulapi-sdk",
+  "name": "restfulapi-sdk",
   "version": "0.0.1",
-  "description": "standard restful api sdk with promise and cache",
+  "description": "standard restful api sdk with cache",
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/youngerheart/resfulapi-sdk.git"
+    "url": "https://github.com/youngerheart/restfulapi-sdk.git"
   },
   "files": [
     "README.md",
     "dist/"
   ],
   "keywords": [
-    "resfulapi"
+    "restfulapi"
   ],
   "author": "youngerheart",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/youngerheart/daterangepicker/issues"
+    "url": "https://github.com/youngerheart/restfulapi-sdk/issues"
   },
-  "homepage": "https://github.com/youngerheart/daterangepicker",
+  "homepage": "https://github.com/youngerheart/restfulapi-sdk",
   "dependencies": {
     "browser-cache": "0.0.5"
   },
@@ -32,6 +32,6 @@
     "webpack-dev-server": "^1.12.0"
   },
   "scripts": {
-    "watch": "webpack-dev-server --content-base example/ --inline --port 8888"
+    "watch": "webpack --progress --hide-modules --watch & webpack-dev-server --content-base example/ --inline --port 8888"
   }
 }
