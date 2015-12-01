@@ -10,7 +10,7 @@ const parse = (str) => {
 const getParamStr = (arg) => {
   var paramStr = '';
   for(let key in arg) {
-    if(!paramStr) paramStr += '?' + key + '=' + arg[key];
+    if(!paramStr) paramStr += key + '=' + arg[key];
     else paramStr += '&' + key + '=' + arg[key];
   }
   return paramStr;
@@ -28,7 +28,7 @@ const parseUrl = (url, arg) => {
       url = url.replace(new RegExp('/' + item ,'g'), '');
     }
   });
-  return url + getParamStr(arg);
+  return url + '?' + getParamStr(arg);
 };
 
 // 得到发送请求的函数
