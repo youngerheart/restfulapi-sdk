@@ -9,6 +9,8 @@ module.exports = {
   output: {
     path: './dist',
     publicPath: '/dist/',
+    library: 'restfulapi-sdk',
+    libraryTarget: 'umd',
     filename: isProduction ? '[name].[chunkhash].js' : '[name].js'
   },
   babel: {

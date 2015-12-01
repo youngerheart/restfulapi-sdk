@@ -10,12 +10,13 @@
     <script type="text/javascript">
       var url = {
         hehe: {
-          haha: '/api/:id',
+          haha: '/api/sdf',
           wow: '/api/:order/change'
         },
         yoo: '/api/:yoo'
       };
       var api = new APISDK(url);
+      api.hehe.haha.get().send();
       api.hehe.wow.post({
         id: 'wow',
         eee: 123

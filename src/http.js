@@ -25,7 +25,7 @@ const getParamStr = (arg) => {
 // 解析url和参数
 const parseUrl = (url, arg) => {
   var proto = url.match(/:\w+/g);
-  proto.forEach((item) => {
+  proto && proto.forEach((item) => {
     let key = item.replace(':', '');
     if(arg[key]) {
       url = url.replace(new RegExp(item ,'g'), arg[key]);
@@ -34,7 +34,8 @@ const parseUrl = (url, arg) => {
       url = url.replace(new RegExp('/' + item ,'g'), '');
     }
   });
-  return url + '?' + getParamStr(arg);
+  var paramStr = getParamStr(arg);
+  return url + (paramStr ? '?' + paramStr : '');
 };
 
 // 得到发送请求的函数
@@ -46,7 +47,7 @@ const getSendFunc = (arg, method, url) => {
       if(req.readyState === 4) {
         if(req.status >= 200 && req.status < 300) {
           var res = parse(req.responseText);
-          if(needCache && method === 'get') {
+          if(config.needCache && method === 'get') {
             // 存入缓存操作
             Cache.save(realUrl, res, config.isSession);
           }
@@ -134,7 +135,8 @@ const http = {
       Cache.init({
         limit: config.overdue || 3600,
         overdue: config.overdueDay || null,
-        prefix: config.cachePrefix || 'api'
+        prefix: config.cachePrefix || 'api',
+        needCache: config.needCache || false
       });
       config.isSession = config.isSession || false;
     } else {
