@@ -32,10 +32,21 @@ const copy = function(obj) {
 };
 
 // 生成SDK对象
-const SDK = function(url) {
-  var api = copy(url);
-  walk(api);
-  return api;
+class SDK {
+  constructor(url, config) {
+    this.url = url;
+    this.config = config;
+    var api = copy(this.url);
+    walk(api);
+    return api;
+  }
+};
+
+SDK.all = (arr) => {
+  return {
+    send: null,
+    cache: null
+  }
 };
 
 module.exports = SDK;
