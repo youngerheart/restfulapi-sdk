@@ -80,6 +80,11 @@ const getSendFunc = (arg, method, url) => {
         req.send(getParamStr(arg[1]));
         break;
     }
+    var methodObj = {
+      send: getSendFunc(arg, method, url)
+    };
+    if(config.needCache && method === 'get') methodObj.cache = getCacheFunc(arg, method, url);
+    return methodObj;
   };
 };
 
@@ -104,12 +109,16 @@ const getCacheFunc = (arg, method, url) => {
         deal();
         break;
     }
+    return {
+      send: getSendFunc(arg, method, url),
+      cache: getCacheFunc(arg, method, url)
+    };
   };
 };
 
 // 生成四种方法调用函数
 const method = (method, url) => {
-  return (...arg) => {
+  return function(...arg) {
     var methodObj = {
       send: getSendFunc(arg, method, url)
     };
