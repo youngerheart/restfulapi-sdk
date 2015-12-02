@@ -1,6 +1,6 @@
 const Cache = require('browser-cache');
 var config = {
-  cache: true,
+  needCache: true,
   isSession: false
 };
 
@@ -113,7 +113,7 @@ const method = (method, url) => {
     var methodObj = {
       send: getSendFunc(arg, method, url)
     };
-    if(method === 'get') methodObj.cache = getCacheFunc(arg, method, url);
+    if(config.needCache && method === 'get') methodObj.cache = getCacheFunc(arg, method, url);
     return methodObj;
   };
 };
@@ -135,12 +135,12 @@ const http = {
       Cache.init({
         limit: config.overdue || 3600,
         overdue: config.overdueDay || null,
-        prefix: config.cachePrefix || 'api',
-        needCache: config.needCache || false
+        prefix: config.cachePrefix || 'api'
       });
       config.isSession = config.isSession || false;
+      config.needCache = true;
     } else {
-      config.cache = false;
+      config.needCache = false;
     }
   }
 };
