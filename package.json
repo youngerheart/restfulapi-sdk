@@ -1,6 +1,6 @@
 {
   "name": "restfulapi-sdk",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "standard restful api sdk with cache",
   "main": "dist/index.js",
   "repository": {
