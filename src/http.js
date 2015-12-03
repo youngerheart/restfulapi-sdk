@@ -1,5 +1,5 @@
 const Cache = require('browser-cache');
-const Refer = require('./refer');
+const Promise = require('./promise');
 
 var config = {
   needCache: true,
@@ -112,7 +112,7 @@ const getSendFunc = (method, url, args, defer) => {
 
 const getInitMethod = (method, url) => {
   return (...args) => {
-    return new Refer(getSendFunc, method, url, args);
+    return new Promise(getSendFunc, method, url, args);
   };
 };
 

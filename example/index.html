@@ -17,17 +17,19 @@
       };
       var api = new APISDK(url);
       api.hehe.haha.get()
-      .then((res, httpCode) => {
-        console.log(res, httpCode);
-      }, (err, httpCode) => {
-        console.log(err, httpCode);
+      .then(() => {}, (res, httpCode, hehe) => {
+        hehe(true, {yoo: 'ok'});
+      }).then((fun) => {
+        console.log(fun);
+      }, (fun) => {
+        console.log(fun);
       });
-      api.hehe.wow.post({
-        id: 'wow',
-        eee: 123
-      }, {
-        yoo: '123'
-      });
+      // api.hehe.wow.post({
+      //   id: 'wow',
+      //   eee: 123
+      // }, {
+      //   yoo: '123'
+      // });
     </script>
   </body>
 </html>
