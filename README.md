@@ -1,12 +1,12 @@
 # restfulapi-sdk
-standard restful api sdk with cache
+standard restful api sdk with cache and promise.
 
 ## usage
 
       $ npm install restfulapi-sdk
       $ bower install restfulapi-sdk // or use bower
 
-Include `sdk.min.js` in `/dist` by tag , you can also require js by `require('restfulapi-sdk')`
+Include `sdk.js` in `/dist` by tag , you can also require js by `require('restfulapi-sdk')`
 
       var urls = {
         order: '/api/order/:id',
@@ -31,24 +31,36 @@ Include `sdk.min.js` in `/dist` by tag , you can also require js by `require('re
         otherRouteParams: ...
       });
 
-      var todo2 = API.order.get({
+      var todo2 = API.order.post({
         id: id,
         otherRouteParams: ...
       });
 
-      APISDK.all([todo1, todo2])
-      .cache(() => { // while use cache data
+      // cache data with get method, will get remote data first
+      API.order.cache({
+        id: id,
+        otherRouteParams: ...
+      }).then((res, httpCode) => {
         // success
-      }, () => {
+        // do something
+        return newRes (or newResArr); // arguments in next success()
+        throw newErr (or newResArr); // arguments in next error()
+      }, (err, httpCode) => {
+        // no data or overdue
+      });
+
+      APISDK.all([todo1, todo2])
+      .then((res, httpCode) => { // all response data array
+        // success
+      }, (err, httpCode) => {
         // no data or overdue
       })
-      .send((res, resCode) => {}, (err, resCode) => {}); // while use api data
 
       API.user.put({
         id: id
       }, {
         newPassword: newPassword
-      }).send(() => {}, () => {}); // while use api data
+      }).then(() => {}, () => {}); // while use api data
 
 
 ## develop

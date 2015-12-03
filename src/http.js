@@ -1,4 +1,6 @@
 const Cache = require('browser-cache');
+const Refer = require('./refer');
+
 var config = {
   needCache: true,
   isSession: false
@@ -13,117 +15,104 @@ const parse = (str) => {
 };
 
 // 根据参数对象生成参数
-const getParamStr = (arg) => {
+const getParamStr = (params) => {
   var paramStr = '';
-  for(let key in arg) {
-    if(!paramStr) paramStr += key + '=' + arg[key];
-    else paramStr += '\&' + key + '=' + arg[key];
+  for(let key in params) {
+    if(!paramStr) paramStr += key + '=' + params[key];
+    else paramStr += '\&' + key + '=' + params[key];
   }
   return paramStr;
 };
 
 // 解析url和参数
-const parseUrl = (url, arg) => {
+const parseUrl = (url, params) => {
   var proto = url.match(/:\w+/g);
   proto && proto.forEach((item) => {
     let key = item.replace(':', '');
-    if(arg[key]) {
-      url = url.replace(new RegExp(item ,'g'), arg[key]);
-      delete arg[key];
+    if(params[key]) {
+      url = url.replace(new RegExp(item ,'g'), params[key]);
+      delete params[key];
     } else {
       url = url.replace(new RegExp('/' + item ,'g'), '');
     }
   });
-  var paramStr = getParamStr(arg);
+  var paramStr = getParamStr(params);
   return url + (paramStr ? '?' + paramStr : '');
 };
 
-// 得到发送请求的函数
-const getSendFunc = (arg, method, url) => {
-  return function(success, error) {
-    const req = new XMLHttpRequest();
-    var realUrl = '';
-    req.onreadystatechange = () => {
-      if(req.readyState === 4) {
-        if(req.status >= 200 && req.status < 300) {
-          var res = parse(req.responseText);
-          if(config.needCache && method === 'get') {
-            // 存入缓存操作
-            Cache.save(realUrl, res, config.isSession);
-          }
-          if(success) success(res, req.status);
-        } else {
-          if(error) error(parse(req.responseText), req.status);
-        }
-      }
-    };
-
-    var openReq = () => {
-      req.open(method, realUrl, true);
-      if(method !== 'get') req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    };
-
-    switch(arg.length) {
-      case 0:
-        realUrl = parseUrl(url, {});
-        openReq();
-        req.send();
-        break;
-      case 1:
-        realUrl = parseUrl(url, arg[0]);
-        openReq();
-        req.send();
-        break;
-      case 2:
-        realUrl = parseUrl(url, arg[0]);
-        openReq();
-        req.send(getParamStr(arg[1]));
-        break;
-    }
-    var methodObj = {
-      send: getSendFunc(arg, method, url)
-    };
-    if(config.needCache && method === 'get') methodObj.cache = getCacheFunc(arg, method, url);
-    return methodObj;
-  };
-};
-
 // 得到获取缓存数据的函数
-const getCacheFunc = (arg, method, url) => {
-  return function(success, error) {
-    var realUrl = '';
-    var deal = () => {
-      Cache.deal(realUrl, (overdue, data) => {
-        if(overdue || !data) error(data, overdue);
-        else success(data, overdue);
-      }, config.isSession);
-    };
-    switch(arg.length) {
-      case 0:
-        realUrl = parseUrl(url, {});
-        deal();
-        break;
-      case 1:
-      case 2:
-        realUrl = parseUrl(url, arg[0]);
-        deal();
-        break;
-    }
-    return {
-      send: getSendFunc(arg, method, url),
-      cache: getCacheFunc(arg, method, url)
-    };
+const getCacheFunc = (url, args, defer) => {
+  var realUrl = '';
+  var deal = () => {
+    Cache.deal(realUrl, (overdue, data) => {
+      if(overdue || !data) {
+        // 请求接口数据
+        getSendFunc('get', url, args, defer);
+      } else {
+        defer(true, data, 200);
+      } 
+    }, config.isSession);
   };
+  switch(args.length) {
+    case 0:
+      realUrl = parseUrl(url, {});
+      deal();
+      break;
+    case 1:
+    case 2:
+      realUrl = parseUrl(url, args[0]);
+      deal();
+      break;
+  }
 };
 
-// 生成四种方法调用函数
-const method = (method, url) => {
-  return function(...arg) {
-    var methodObj = {
-      send: getSendFunc(arg, method, url)
-    };
-    if(config.needCache && method === 'get') methodObj.cache = getCacheFunc(arg, method, url);
-    return methodObj;
+// 生成调用接口的函数
+const getSendFunc = (method, url, args, defer) => {
+  // 直接调用接口
+  const req = new XMLHttpRequest();
+  var realUrl = '';
+  req.onreadystatechange = () => {
+    if(req.readyState === 4) {
+      if(req.status >= 200 && req.status < 300) {
+        var res = parse(req.responseText);
+        if(config.needCache && method === 'get') {
+          // 存入缓存操作
+          Cache.save(realUrl, res, config.isSession);
+        }
+        defer(true, res, req.status);
+      } else {
+        defer(false, parse(req.responseText), req.status);
+      }
+    }
+  };
+
+  var openReq = () => {
+    req.open(method, realUrl, true);
+    if(method !== 'get') req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  };
+
+  switch(args.length) {
+    case 0:
+      realUrl = parseUrl(url, {});
+      openReq();
+      req.send();
+      break;
+    case 1:
+      realUrl = parseUrl(url, args[0]);
+      openReq();
+      req.send();
+      break;
+    case 2:
+      realUrl = parseUrl(url, args[0]);
+      openReq();
+      req.send(getParamStr(args[1]));
+      break;
+  }
+};
+
+const getInitMethod = (method, url) => {
+  return (...args) => {
+    return new Refer(getSendFunc, method, url, args);
   };
 };
 
@@ -132,10 +121,13 @@ const http = {
   getObj(url) {
     if(!url) return null;
     return {
-      get: method('get', url),
-      post: method('post', url),
-      put: method('put', url),
-      del: method('delete', url)
+      get: getInitMethod('get', url),
+      post: getInitMethod('post', url),
+      put: getInitMethod('put', url),
+      del: getInitMethod('delete', url),
+      cache: (...args) => {
+        return new Refer(getCacheFunc, url, args);
+      },
     };
   },
   setConfig(config) {
