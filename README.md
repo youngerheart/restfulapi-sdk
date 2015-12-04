@@ -40,21 +40,19 @@ Include `sdk.js` in `/dist` by tag , you can also require js by `require('restfu
       API.order.cache({
         id: id,
         otherRouteParams: ...
-      }).then((res, httpCode) => {
+      }).then((res, httpCode, refer) => {
         // success
         // do something
-        return newRes (or newResArr); // arguments in next success()
-        throw newErr (or newResArr); // arguments in next error()
+        refer(true, ...newRes); // arguments in next success()
+        refer(false, ...newErr); // arguments in next error()
       }, (err, httpCode) => {
         // no data or overdue
       });
 
       APISDK.all([todo1, todo2])
-      .then((res, httpCode) => { // all response data array
-        // success
-      }, (err, httpCode) => {
-        // no data or overdue
-      })
+      .then((successArr, errorArr, refer) => { // only trigger in success function
+        // successArr[0] = [indexinPromiseArr, ...returnParams]
+      });
 
       API.user.put({
         id: id

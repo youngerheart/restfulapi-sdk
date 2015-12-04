@@ -1,4 +1,5 @@
 const Cache = require('browser-cache');
+const Promise = require('./promise');
 const http = require('./http');
 
 // 遍历url对象，生成api对象。
@@ -42,11 +43,6 @@ class APISDK {
   }
 };
 
-APISDK.all = (arr) => {
-  return {
-    send: null,
-    cache: null
-  };
-};
+APISDK.all = Promise.all;
 
 module.exports = APISDK;
