@@ -16,30 +16,34 @@
         yoo: '/api/:yoo'
       };
       var api = new APISDK(url);
-      var p1 = api.hehe.haha.get()
-      .then(() => {}, (res, httpCode, defer) => {
-        setTimeout(() => {defer(true, {yoo: 'ok'})}, 400);
-      }).then((res, defer) => {
-        defer(true);
-      }, (defer) => {
-      });
-      var p2 = api.hehe.wow.post({
-        id: 'wow',
-        eee: 123
-      }, {
-        yoo: '123'
-      }).then(() => {}, (res, httpCode, defer) => {
-        setTimeout(() => {defer(true, {yoo: 'p2 ok'})}, 200);
-      }).then((res, defer) => {
-        defer(false, {haha: 'finish'});
-      });
+      // var p1 = api.hehe.haha.get()
+      // .then(() => {}, (res, httpCode, defer) => {
+      //   setTimeout(() => {defer(true, {yoo: 'ok'})}, 400);
+      // }).then((res, defer) => {
+      //   defer(true);
+      // }, (defer) => {
+      // });
+      // var p2 = api.hehe.wow.post({
+      //   id: 'wow',
+      //   eee: 123
+      // }, {
+      //   yoo: '123'
+      // }).then(() => {}, (res, httpCode, defer) => {
+      //   setTimeout(() => {defer(true, {yoo: 'p2 ok'})}, 200);
+      // }).then((res, defer) => {
+      //   defer(false, {haha: 'finish'});
+      // });
 
-      var promiseArr = [p1, p2];
-      var all = APISDK.all(promiseArr)
-      .then((resArr, errorArr, defer) => {
-        console.log(resArr, errorArr);
-        defer(false, {hehe: '1'});
-      });
+      // var promiseArr = [p1, p2];
+      // var all = APISDK.all(promiseArr)
+      // .then((resArr, errorArr, defer) => {
+      //   console.log(resArr, errorArr);
+      //   defer(false, {hehe: '1'});
+      // });
+
+      var p3 = api.hehe.haha.cache().then((res) => {
+        console.log(err);
+      }, (err) => {console.log(err)});
       // all.then((res) => {
       //   console.log(res);
       // }, (res) => {

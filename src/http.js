@@ -49,7 +49,9 @@ const getCacheFunc = (url, args, defer) => {
         // 请求接口数据
         getSendFunc('get', url, args, defer);
       } else {
-        defer(true, data, 200);
+        setTimeout(() => {
+          defer(true, data, 200);
+        });
       } 
     }, config.isSession);
   };
