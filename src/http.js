@@ -126,7 +126,7 @@ const http = {
       put: getInitMethod('put', url),
       del: getInitMethod('delete', url),
       cache: (...args) => {
-        return new Refer(getCacheFunc, url, args);
+        return new Promise(getCacheFunc, url, args);
       },
     };
   },
