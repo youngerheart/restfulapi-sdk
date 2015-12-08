@@ -30,6 +30,8 @@
     "webpack-dev-server": "^1.12.0"
   },
   "scripts": {
+    "test": "make test",
+    "build": "webpack --progress --hide-modules",
     "watch": "webpack --progress --hide-modules --watch & webpack-dev-server --content-base example/ --inline --port 8888"
   }
 }

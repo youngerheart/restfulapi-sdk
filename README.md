@@ -1,4 +1,6 @@
-# restfulapi-sdk
+restfulapi-sdk[![Build Status](https://travis-ci.org/youngerheart/restfulapi-sdk.svg)](https://travis-ci.org/youngerheart/restfulapi-sdk)
+=========
+
 standard restful api sdk with cache and promise.
 
 ## usage

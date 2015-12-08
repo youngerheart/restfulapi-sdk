@@ -25,6 +25,9 @@ install:
 	  cp -R $$src/node_modules $$path; \
 	fi
 
+test: install
+	@npm run build
+
 dev: install
 	@npm run watch
 
