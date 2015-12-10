@@ -4,16 +4,7 @@ const http = require('./http');
 
 // 遍历url对象，生成api对象。
 const walk = function(obj) {
-  for(var key in obj) {
-    if(typeof obj[key] === 'object') {
-      walk(obj[key]);
-    } else if(typeof obj[key] === 'string') {
-      var url = obj[key];
-      obj[key] = (function(url) {
-        return http.getObj(url);
-      })(url);
-    }
-  }
+  
 };
 
 // 深拷贝对象
@@ -36,10 +27,23 @@ const copy = function(obj) {
 // 生成APISDK对象
 class APISDK {
   constructor(url, config) {
-    http.setConfig(config);
+    this.http = new http(config);
     var api = copy(url);
-    walk(api);
+    this.walk(api);
     return api;
+  }
+
+  walk(obj) {
+    for(var key in obj) {
+      if(typeof obj[key] === 'object') {
+        this.walk(obj[key]);
+      } else if(typeof obj[key] === 'string') {
+        var url = obj[key];
+        obj[key] = ((url) => {
+          return this.http.getObj(url);
+        })(url);
+      }
+    }
   }
 };
 
