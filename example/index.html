@@ -10,12 +10,18 @@
     <script type="text/javascript">
       var url = {
         hehe: {
-          haha: '/api/sdf',
-          wow: '/api/:order/change'
+          haha: 'sdf',
+          wow: ':order/change'
         },
-        yoo: '/api/:yoo'
+        yoo: ':yoo'
       };
-      var api = new APISDK(url);
+      var config = {
+        urlPrefix: 'api/'
+      };
+      APISDK.httpCode((code) => {
+        console.log(code);
+      });
+      var api = new APISDK(url, config);
       // var p1 = api.hehe.haha.get()
       // .then(() => {}, (res, httpCode, defer) => {
       //   setTimeout(() => {defer(true, {yoo: 'ok'})}, 400);

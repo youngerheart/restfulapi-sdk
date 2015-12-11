@@ -18,8 +18,9 @@ Include `sdk.js` in `/dist` by tag , you can also require js by `require('restfu
       };
 
       var config = {
+        urlPrefix: 'api/', // you can add a urlPrefix, default ''
         cache: false, // open cache, default false (only valid with get method)
-        cachePrefix: 'api', // prefix, default 'api'
+        cachePrefix: 'api', // cache prefix, default 'api'
         overdue: 3600, // cache time, unit second, default 3600
         overdueDay: null, // cache days number，prior to overdue，default null
         isSession: false // use sessionStorage for cache or not
@@ -62,6 +63,10 @@ Include `sdk.js` in `/dist` by tag , you can also require js by `require('restfu
         newPassword: newPassword
       }).then(() => {}, () => {}); // while use api data
 
+      /*  static method for httpCode  */
+      APISDK.httpCode((code) => {
+        console.log(code);
+      });
 
 ## develop
 

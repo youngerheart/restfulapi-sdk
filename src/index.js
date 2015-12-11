@@ -48,5 +48,6 @@ class APISDK {
 };
 
 APISDK.all = Promise.all;
+APISDK.httpCode = http.httpCode;
 
 module.exports = APISDK;

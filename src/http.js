@@ -40,14 +40,17 @@ class http {
   constructor(config) {
     if(typeof config === 'undefined' || config.cache) {
       this.config = config || {};
+      this.config.urlPrefix = config.urlPrefix || '';
       Cache.init({
         limit: this.config.overdue || 3600,
         overdue: this.config.overdueDay || null,
         prefix: this.config.cachePrefix || 'api'
       });
-      this.config.isSession = this.config.isSession || false;
+      this.config.isSession = config.isSession || false;
       this.config.needCache = true;
     } else {
+      this.config = {};
+      this.config.urlPrefix = config.urlPrefix || '';
       this.config.needCache = false;
     }
   };
@@ -73,16 +76,18 @@ class http {
 
   // 生成调用接口的函数
   getSendFunc(method, url, args, defer) {
+    var {needCache, isSession, urlPrefix} = this.config;
     // 直接调用接口
     const req = new XMLHttpRequest();
     var realUrl = '';
     req.onreadystatechange = () => {
       if(req.readyState === 4) {
+        if(http.codeCallback) http.codeCallback(req.status);
         if(req.status >= 200 && req.status < 300) {
           var res = parse(req.responseText);
-          if(this.config.needCache && method === 'get') {
+          if(needCache && method === 'get') {
             // 存入缓存操作
-            Cache.save(realUrl, res, this.config.isSession);
+            Cache.save(realUrl, res, isSession);
           }
           defer(true, res, req.status);
         } else {
@@ -98,17 +103,17 @@ class http {
 
     switch(args.length) {
       case 0:
-        realUrl = parseUrl(url, {});
+        realUrl = urlPrefix + parseUrl(url, {});
         openReq();
         req.send();
         break;
       case 1:
-        realUrl = parseUrl(url, args[0]);
+        realUrl = urlPrefix + parseUrl(url, args[0]);
         openReq();
         req.send();
         break;
       case 2:
-        realUrl = parseUrl(url, args[0]);
+        realUrl = urlPrefix + parseUrl(url, args[0]);
         openReq();
         req.send(getParamStr(args[1]));
         break;
@@ -117,6 +122,7 @@ class http {
 
   // 得到获取缓存数据的函数
   getCacheFunc(url, args, defer) {
+    var {urlPrefix, isSession} = this.config;
     var realUrl = '';
     var deal = () => {
       Cache.deal(realUrl, (overdue, data) => {
@@ -125,23 +131,28 @@ class http {
           this.getSendFunc('get', url, args, defer);
         } else {
           setTimeout(() => {
+            if(http.codeCallback) http.codeCallback(200);
             defer(true, data, 200);
           });
         } 
-      }, this.config.isSession);
+      }, isSession);
     };
     switch(args.length) {
       case 0:
-        realUrl = parseUrl(url, {});
+        realUrl = urlPrefix + parseUrl(url, {});
         deal();
         break;
       case 1:
       case 2:
-        realUrl = parseUrl(url, args[0]);
+        realUrl = urlPrefix + parseUrl(url, args[0]);
         deal();
         break;
     }
   };
+
+  static httpCode(callback) {
+    if(typeof callback === 'function') http.codeCallback = callback;
+  }
 };
 
 module.exports = http;
