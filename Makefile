@@ -1,3 +1,5 @@
+.PHONY: all test clean
+
 default: help
 
 help:
@@ -25,11 +27,11 @@ install:
 	  cp -R $$src/node_modules $$path; \
 	fi
 
-test: install
-	@npm run build
+test:
+	@NODE_ENV=test node server.js
 
 dev: install
-	@npm run watch
+	@npm run watch && node server.js
 
 
 clean:

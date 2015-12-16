@@ -18,27 +18,28 @@
       var config = {
         urlPrefix: 'api/'
       };
-      APISDK.httpCode((code) => {
+      APISDK.httpCode(function(code) {
         console.log(code);
       });
       var api = new APISDK(url, config);
-      // var p1 = api.hehe.haha.get()
-      // .then(() => {}, (res, httpCode, defer) => {
-      //   setTimeout(() => {defer(true, {yoo: 'ok'})}, 400);
-      // }).then((res, defer) => {
-      //   defer(true);
-      // }, (defer) => {
-      // });
-      // var p2 = api.hehe.wow.post({
-      //   id: 'wow',
-      //   eee: 123
-      // }, {
-      //   yoo: '123'
-      // }).then(() => {}, (res, httpCode, defer) => {
-      //   setTimeout(() => {defer(true, {yoo: 'p2 ok'})}, 200);
-      // }).then((res, defer) => {
-      //   defer(false, {haha: 'finish'});
-      // });
+      var p1 = api.hehe.haha.get()
+      .then(function() {}, function(res, httpCode, defer) {
+        defer(true, {yoo: 'ok'})
+      }).then(function(res, defer) {
+        defer(true, {yoo: 'ok'});
+      });
+      var p2 = api.hehe.wow.post({
+        id: 'wow',
+        eee: 123
+      }, {
+        yoo: '123'
+      }).then(function(res, httpCode, defer) {
+        setTimeout(function() {defer(true, {yoo: 'p2 ok'})}, 200);
+      }, function(res, httpCode, defer) {
+        setTimeout(function() {defer(true, {yoo: 'p2 err'})}, 200);
+      }).then(function(res, defer) {
+        defer(false, {haha: 'finish'});
+      });
 
       // var promiseArr = [p1, p2];
       // var all = APISDK.all(promiseArr)
@@ -47,9 +48,9 @@
       //   defer(false, {hehe: '1'});
       // });
 
-      var p3 = api.hehe.haha.cache().then((res) => {
-        console.log(err);
-      }, (err) => {console.log(err)});
+      // var p3 = api.hehe.haha.cache().then((res) => {
+      //   console.log(res);
+      // }, (err) => {console.log(err)});
       // all.then((res) => {
       //   console.log(res);
       // }, (res) => {
