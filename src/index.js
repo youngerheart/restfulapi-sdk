@@ -49,5 +49,8 @@ class APISDK {
 
 APISDK.all = Promise.all;
 APISDK.httpCode = http.httpCode;
+// 这里是一个坑
+// var isWindow = (Function('return this')().constructor + '').match(/ (\w+)|$/)[1] === 'Window';
+// if(isWindow) window.APISDK = APISDK;
 
 module.exports = APISDK;
