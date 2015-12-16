@@ -6,7 +6,7 @@ const parse = (str) => {
   try {
     str = JSON.parse(str);
   } catch(e) {
-    console.warn('Parse' + str + 'failed');
+    // this is a normal String
   }
   return str;
 };
@@ -30,7 +30,7 @@ const parseUrl = (url, params) => {
       url = url.replace(new RegExp(item ,'g'), params[key]);
       delete params[key];
     } else {
-      url = url.replace(new RegExp('/?' + item + 'g'), '');
+      url = url.replace(new RegExp(item + '/?', 'g'), '');
     }
   });
   var paramStr = getParamStr(params);

@@ -5,8 +5,11 @@ default: help
 help:
 	@echo "   \033[35mmake\033[0m \033[1m命令使用说明\033[0m"
 	@echo "   \033[35mmake install\033[0m\t---  安装依赖"
-	@echo "   \033[35mmake clean\033[0m\t---  清除已经安装的依赖及缓存"
+	@echo "   \033[35mmake install\033[0m\t---  生成dist文件"
+	@echo "   \033[35mmake test\033[0m\t---  执行单元与UI测试"
+	@echo "   \033[35mmake example\033[0m\t---  发布测试页面到gh-page分支"
 	@echo "   \033[35mmake dev\033[0m\t---  开发模式（在 build 的基础上 watch 文件变化并自动 build）"
+	@echo "   \033[35mmake clean\033[0m\t---  清除已经安装的依赖及缓存"
 
 install:
 	@hash="cache-restfulapisdk-$$(cat Makefile package.json | openssl sha1 | tail -c33)"; \
@@ -25,10 +28,20 @@ install:
 	  fi; \
 	  mkdir -p $$path; \
 	  cp -R $$src/node_modules $$path; \
-	fi
+	fi; \
 
-test:
-	@NODE_ENV=test node server.js
+build: install
+	@npm run build
+
+test: build
+	@mocha test/unit.js && mocha-casperjs test/ui.js
+
+example: build
+	@if [ ! -d ghpages ]; then \
+		git clone git@github.com:youngerheart/restfulapi-sdk.git --branch gh-pages ghpages; \
+	fi; \
+	cp dist/sdk.js ghpages/dist && cd ghpages && git add .; \
+	git commit -m "update ghpages" && git push origin gh-pages -f
 
 dev: install
 	@npm run watch && node server.js

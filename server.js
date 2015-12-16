@@ -15,7 +15,7 @@ app.use('/api/:yoo', function(req, res) {
   res.status(200).send('ok');
 });
 
-app.use('/', express.static(__dirname + '/test'));
+app.use('/', express.static(__dirname + '/ghpages'));
 console.log('server start at port 8888');
 app.listen(8888);
 
