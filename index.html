@@ -9,38 +9,38 @@
     <div></div>
     <script type="text/javascript" src="dist/sdk.js"></script>
     <script type="text/javascript">
-      var url = {
-        hehe: {
-          haha: 'sdf',
-          wow: ':order/change'
-        },
-        yoo: ':yoo'
-      };
-      var config = {
-        urlPrefix: 'api/'
-      };
-      APISDK.httpCode(function(code) {
-        console.log(code);
-      });
-      var api = new APISDK(url, config);
-      var p1 = api.hehe.haha.get()
-      .then(function() {}, function(res, httpCode, defer) {
-        defer(true, {yoo: 'ok'})
-      }).then(function(res, defer) {
-        defer(true, {yoo: 'ok'});
-      });
-      var p2 = api.hehe.wow.post({
-        id: 'wow',
-        eee: 123
-      }, {
-        yoo: '123'
-      }).then(function(res, httpCode, defer) {
-        setTimeout(function() {defer(true, {yoo: 'p2 ok'})}, 200);
-      }, function(res, httpCode, defer) {
-        setTimeout(function() {defer(true, {yoo: 'p2 err'})}, 200);
-      }).then(function(res, defer) {
-        defer(false, {haha: 'finish'});
-      });
+      // var url = {
+      //   hehe: {
+      //     haha: 'sdf',
+      //     wow: ':order/change'
+      //   },
+      //   yoo: ':yoo'
+      // };
+      // var config = {
+      //   urlPrefix: 'api/'
+      // };
+      // APISDK.httpCode(function(code) {
+      //   console.log(code);
+      // });
+      // var api = new APISDK(url, config);
+      // var p1 = api.hehe.haha.get()
+      // .then(function() {}, function(res, httpCode, defer) {
+      //   defer(true, {yoo: 'ok'})
+      // }).then(function(res, defer) {
+      //   defer(true, {yoo: 'ok'});
+      // });
+      // var p2 = api.hehe.wow.post({
+      //   id: 'wow',
+      //   eee: 123
+      // }, {
+      //   yoo: '123'
+      // }).then(function(res, httpCode, defer) {
+      //   setTimeout(function() {defer(true, {yoo: 'p2 ok'})}, 200);
+      // }, function(res, httpCode, defer) {
+      //   setTimeout(function() {defer(true, {yoo: 'p2 err'})}, 200);
+      // }).then(function(res, defer) {
+      //   defer(false, {haha: 'finish'});
+      // });
 
       // var promiseArr = [p1, p2];
       // var all = APISDK.all(promiseArr)
