@@ -1,8 +1,8 @@
 {
   "name": "restfulapi-sdk",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "standard restful api sdk with cache",
-  "main": "dist/index.js",
+  "main": "dist/index.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/youngerheart/restfulapi-sdk.git"
@@ -29,15 +29,15 @@
     "eslint-loader": "1.1.1",
     "express": "^4.10.0",
     "istanbul": "^0.4.1",
-    "mocha": "^2.3.4",
     "mocha-lcov-reporter": "^1.0.0",
     "sinon-chai": "^2.8.0",
     "webpack": "^1.12.2"
   },
   "scripts": {
     "test": "make test",
-    "test-travis": "make build && ./node_modules/.bin/istanbul cover --report lcovonly ./node_modules/.bin/_mocha test/unit && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-travis": "make build && ./node_modules/.bin/istanbul cover --report lcovonly _mocha test/unit && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "build": "webpack --progress --hide-modules",
-    "watch": "NODE_ENV=watch webpack --progress --hide-modules --watch"
+    "watch": "NODE_ENV=watch webpack --progress --hide-modules --watch",
+    "deploy": "NODE_ENV=production webpack --progress --hide-modules"
   }
 }

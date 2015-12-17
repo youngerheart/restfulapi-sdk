@@ -1,5 +1,9 @@
-restfulapi-sdk [![Build Status](https://travis-ci.org/youngerheart/restfulapi-sdk.svg)](https://travis-ci.org/youngerheart/restfulapi-sdk) [![Coverage Status](https://img.shields.io/coveralls/youngerheart/restfulapi-sdk.svg)](https://coveralls.io/r/youngerheart/restfulapi-sdk/) [![NPM version](https://img.shields.io/npm/v/restfulapi-sdk.svg)](https://www.npmjs.com/package/restfulapi-sdk) [![NPM version](https://img.shields.io/npm/dm/restfulapi-sdk.svg)](http://badge.fury.io/js/restfulapi-sdk)
+restfulapi-sdk
 =========
+
+[![NPM version](https://img.shields.io/npm/v/restfulapi-sdk.svg)](https://www.npmjs.com/package/restfulapi-sdk) [![Downloads](https://img.shields.io/npm/dm/restfulapi-sdk.svg)](http://badge.fury.io/js/restfulapi-sdk)
+
+build [![Build Status](https://travis-ci.org/youngerheart/restfulapi-sdk.svg)](https://travis-ci.org/youngerheart/restfulapi-sdk) [![Coverage Status](https://img.shields.io/coveralls/youngerheart/restfulapi-sdk.svg)](https://coveralls.io/r/youngerheart/restfulapi-sdk/)
 
 standard restful api sdk with cache and promise.
 

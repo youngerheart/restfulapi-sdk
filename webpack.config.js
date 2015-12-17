@@ -11,7 +11,7 @@ module.exports = {
     publicPath: '/dist/',
     library: 'restfulapi-sdk',
     libraryTarget: 'umd',
-    filename: isProduction ? '[name].[chunkhash].js' : '[name].js'
+    filename: isProduction ? '[name].min.js' : '[name].js'
   },
   babel: {
     presets: ['es2015']
@@ -23,14 +23,16 @@ module.exports = {
     loaders: [
       {test: /\.js$/, exclude: '/node_modules', loader: 'babel'}
     ]
-  },
-  plugins: [
+  }
+};
+if(isProduction) {
+  module.exports.plugins = [
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
     })
-  ]
-};
+  ];
+}
 
 if(process.env.NODE_ENV === 'watch') require('./server');
