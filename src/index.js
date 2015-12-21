@@ -1,5 +1,4 @@
 const Cache = require('browser-cache');
-const Promise = require('./promise');
 const http = require('./http');
 
 // 遍历url对象，生成api对象。
@@ -47,8 +46,9 @@ class APISDK {
   }
 };
 
-APISDK.all = Promise.all;
+APISDK.all = require('./promise').all;
 APISDK.httpCode = http.httpCode;
+APISDK.removeCache = require('browser-cache').remove;
 // 这里是一个坑
 // var isWindow = (Function('return this')().constructor + '').match(/ (\w+)|$/)[1] === 'Window';
 // if(isWindow) window.APISDK = APISDK;
