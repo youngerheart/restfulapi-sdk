@@ -24,7 +24,7 @@ var api = new APISDK(urls, config);
 describe('restful-API SDK', function() {
   describe('class itself', function() {
     it('should have static methods', function() {
-      expect(APISDK).to.have.all.keys('all', 'httpCode');
+      expect(APISDK).to.have.all.keys('all', 'httpCode', 'removeCache');
     });
   });
 

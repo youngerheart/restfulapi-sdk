@@ -72,6 +72,9 @@ Include `sdk.js` in `/dist` by tag , you can also require js by `require('restfu
         console.log(code);
       });
 
+      /*  static method for remove Cache  */
+      APISDK.remove(key, isSession); // cache key, and use sessionStorage for cache or not
+
 ## develop
 
       $ clone restfulapi-sdk && make dev // then view http://localhost:8888

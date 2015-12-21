@@ -155,6 +155,10 @@ class http {
   static httpCode(callback) {
     if(typeof callback === 'function') http.codeCallback = callback;
   }
+
+  static removeCache(key, isSession) {
+    Cache.remove(key, isSession);
+  }
 };
 
 module.exports = http;
