@@ -7,6 +7,12 @@ build [![Build Status](https://travis-ci.org/youngerheart/restfulapi-sdk.svg)](h
 
 standard restful api sdk with cache and promise.
 
+
+## What achieved 
+1. standard restful api sdk for `get`, `post`, `put`, `delete`, `patch` and `options` methods.
+2. save data in browser side, use `cache` method.
+3. promise callback.
+
 ## usage
 
       $ npm install restfulapi-sdk

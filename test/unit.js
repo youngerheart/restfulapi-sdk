@@ -33,7 +33,7 @@ describe('restful-API SDK', function() {
       expect(api).to.have.a.deep.property('order');
       expect(api).to.have.a.deep.property('user.password');
       [api.order, api.user.password].forEach(function(item) {
-        expect(item).to.have.all.keys('get', 'put', 'post', 'del', 'cache');
+        expect(item).to.have.all.keys('get', 'put', 'post', 'del', 'patch', 'options', 'cache');
       });
     });
   });

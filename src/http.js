@@ -60,10 +60,12 @@ class http {
   getObj(url) {
     if(!url) return null;
     return {
-      get: this.getInitMethod('get', url),
-      post: this.getInitMethod('post', url),
-      put: this.getInitMethod('put', url),
-      del: this.getInitMethod('delete', url),
+      get: this.getInitMethod('GET', url),
+      post: this.getInitMethod('POST', url),
+      put: this.getInitMethod('PUT', url),
+      del: this.getInitMethod('DELETE', url),
+      patch: this.getInitMethod('PATCH', url),
+      options: this.getInitMethod('OPTIONS', url),
       cache: (...args) => {
         return new Promise(this.getCacheFunc.bind(this), url, args);
       },
