@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: './dist',
     publicPath: '/dist/',
-    library: 'restfulapi-sdk',
+    library: 'APISDK',
     libraryTarget: 'umd',
     filename: isProduction ? '[name].min.js' : '[name].js'
   },

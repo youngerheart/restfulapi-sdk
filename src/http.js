@@ -102,7 +102,7 @@ class http {
 
     var openReq = () => {
       req.open(method, realUrl, true);
-      if(method !== 'get') req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      if(method !== 'get') req.setRequestHeader('Content-type', 'application/json');
     };
 
     switch(args.length) {
@@ -119,7 +119,7 @@ class http {
       case 2:
         realUrl = urlPrefix + parseUrl(url, args[0]);
         openReq();
-        req.send(getParamStr(args[1]));
+        req.send(JSON.stringify(args[1]));
         break;
     }
   };

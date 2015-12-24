@@ -47,7 +47,7 @@ example: deploy
 	@if [ ! -d ghpages ]; then \
 		git clone git@github.com:youngerheart/restfulapi-sdk.git --branch gh-pages ghpages; \
 	fi; \
-	cp dist/sdk.min.js ghpages/dist && cd ghpages && git add .; \
+	cp dist/index.min.js ghpages/dist && cd ghpages && git add .; \
 	git commit -m "update ghpages" && git push origin gh-pages -f
 
 dev: install
