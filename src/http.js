@@ -26,8 +26,8 @@ const parseUrl = (url, params) => {
   var proto = url.match(/:\w+/g);
   proto && proto.forEach((item) => {
     let key = item.replace(':', '');
-    if(params[key]) {
-      url = url.replace(new RegExp(item ,'g'), params[key]);
+    if(params[key].toString()) {
+      url = url.replace(new RegExp(item ,'g'), params[key].toString());
       delete params[key];
     } else {
       url = url.replace(new RegExp(item + '/?', 'g'), '');
@@ -59,17 +59,20 @@ class http {
 
   getObj(url) {
     if(!url) return null;
-    return {
+    var obj = {
       get: this.getInitMethod('GET', url),
       post: this.getInitMethod('POST', url),
       put: this.getInitMethod('PUT', url),
       del: this.getInitMethod('DELETE', url),
       patch: this.getInitMethod('PATCH', url),
       options: this.getInitMethod('OPTIONS', url),
-      cache: (...args) => {
-        return new Promise(this.getCacheFunc.bind(this), url, args);
-      },
     };
+    if(this.config.needCache) {
+      obj.cache = (...args) => {
+        return new Promise(this.getCacheFunc.bind(this), url, args);
+      };
+    }
+    return obj;
   };
 
   getInitMethod(method, url) {
