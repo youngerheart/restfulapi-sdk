@@ -14,7 +14,7 @@ var urls = {
 
 var config = {
   urlPrefix: 'api/',
-  cache: false,
+  cache: true,
   cachePrefix: 'api',
   overdueDay: 1
 };
