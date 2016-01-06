@@ -56,7 +56,7 @@ describe('instant usage', function() {
     casper.on("resource.received", function(resource) {
       if(resource.stage == 'end' && resource.url.indexOf('api/') !== -1) {
         this.echo(resource.url, 'PARAMETER');
-        expect(['sdf', 'change?id=wow&eee=123']).to.include(resource.url.split('api/')[1]);
+        expect(['sdf', '0/change?id=wow&eee=123']).to.include(resource.url.split('api/')[1]);
       }
     });
     casper.start('http://youngerheart.github.io/restfulapi-sdk/');
