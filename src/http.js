@@ -28,7 +28,7 @@ const parseUrl = (url, params) => {
   proto && proto.forEach((item) => {
     let key = item.replace(':', '');
     if(params[key] != null) {
-      url = url.replace(new RegExp(item ,'g'), JSON.stringify(params[key]));
+      url = url.replace(new RegExp(item ,'g'), params[key].toString());
       delete params[key];
     } else {
       url = url.replace(new RegExp(item + '/?', 'g'), '');
