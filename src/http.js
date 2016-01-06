@@ -23,6 +23,7 @@ const getParamStr = (params) => {
 
 // 解析url和参数
 const parseUrl = (url, params) => {
+  params = JSON.parse(JSON.stringify(params));
   var proto = url.match(/:\w+/g);
   proto && proto.forEach((item) => {
     let key = item.replace(':', '');
