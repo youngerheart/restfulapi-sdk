@@ -26,7 +26,7 @@ const parseUrl = (url, params) => {
   var proto = url.match(/:\w+/g);
   proto && proto.forEach((item) => {
     let key = item.replace(':', '');
-    if(params[key].toString()) {
+    if(params[key] !== undefined && params[key] !== null) {
       url = url.replace(new RegExp(item ,'g'), params[key].toString());
       delete params[key];
     } else {
